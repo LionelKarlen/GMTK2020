@@ -15,7 +15,7 @@ public class MapGeneration : MonoBehaviour {
     public Tile[] roads;
     public Tile[] obstacles;
 
-    public int minCurves;
+    public int distanceModifier;
     public GameObject CameraRig;
 
     private bool startPoint=false;
@@ -35,10 +35,13 @@ public class MapGeneration : MonoBehaviour {
                     startPointVector=tile;
                     startPoint=true;
                     CameraRig.transform.position = roadTilemap.CellToWorld(tile)+new Vector3(3.5f,3.5f,0);
-                } else if(x>size.x*.75f && Random.Range(0f,1f)>.75f && !endPoint) {
+                } else if(x>size.x*.9f && Random.Range(0f,1f)>.75f && !endPoint && y>startPointVector.y+distanceModifier) {
                     roadTilemap.SetTile(tile, roads[0]);
                     endPointVector=tile;
                     endPoint=true;
+                }
+                if(!endPoint) {
+                    endPointVector=new Vector3(size.x,size.y,0);
                 }
             }
         }
@@ -61,7 +64,7 @@ public class MapGeneration : MonoBehaviour {
             while(!valid) {
                 int move = Random.Range(0,4);
                 candidate = new Vector2(current_position.x+offsets[move].x,current_position.y+offsets[move].y);
-                valid = isInBounds(candidate);
+                valid = isLegalCandidate(candidate,current_position,end);
             }
             current_position=candidate;
             path.Add(current_position);
@@ -69,9 +72,12 @@ public class MapGeneration : MonoBehaviour {
         return path;
     }
 
-    bool isInBounds(Vector2 coordinate) {
-        if(coordinate.x>=0&&coordinate.x<this.size.x&&coordinate.y>=0&&coordinate.y<this.size.y) {
-            return true;
+    bool isLegalCandidate(Vector2 candidate, Vector2 current, Vector2 end) {
+        if(candidate.x>=0&&candidate.x<this.size.x&&candidate.y>=0&&candidate.y<this.size.y) {
+            if(Vector2.Distance(candidate,end)<Vector2.Distance(current,end)) {
+                return true;
+            }
+            return false;
         }
         return false;
     }
