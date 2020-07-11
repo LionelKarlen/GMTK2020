@@ -42,37 +42,37 @@ public class MapGeneration : MonoBehaviour {
                 }
             }
         }
-        foreach(Node road in findPathUsingCurves(startPointVector,endPointVector,minCurves)) {
-            roadTilemap.SetTile(road.coordinates, road.tile);
+        foreach(Vector2 road in findRandomPath(new Vector2(startPointVector.x,startPointVector.y),new Vector2(endPointVector.x,endPointVector.y))) {
+            roadTilemap.SetTile(new Vector3Int((int)road.x,(int)road.y,0), roads[0]);
         }
     }
 
-    // Update is called once per frame
-    void Update() {
-        
-    }
+    List<Vector2> findRandomPath(Vector2 start, Vector2 end) {
+        Vector2[] offsets = {new Vector2(0,-1), new Vector2(-1,0), new Vector2(0,1), new Vector2(1,0)};
+        int possible_moves = offsets.Length;
 
-    List<Node> findPathUsingCurves(Vector3 start, Vector3 end, int minCurves) {
-        float x=start.x;
-        List<Node> path=new List<Node>();
-        while(x<end.x) {
-            path.Add(new Node(new Vector3Int((int)x,(int)start.y,0), roads[2]));  
-            x++;
-        }
-        path.Add(new Node(new Vector3Int((int)x,(int)start.y,0), roads[1]));
-        float y = start.y;
-        if(end.y>start.y) {
-            while(y<end.y) {
-                y++;
-                path.Add(new Node(new Vector3Int((int)x,(int)y,0),roads[0]));
+        Vector2 current_position = start;
+        List<Vector2> path = new List<Vector2>();
+        path.Add(current_position);
+
+        while(current_position!=end) {
+            bool valid = false;
+            Vector2 candidate = new Vector2();
+            while(!valid) {
+                int move = Random.Range(0,4);
+                candidate = new Vector2(current_position.x+offsets[move].x,current_position.y+offsets[move].y);
+                valid = isInBounds(candidate);
             }
-        } else if(end.y<start.y){
-            while(y>end.y) {
-                y--;
-                path.Add(new Node(new Vector3Int((int)x,(int)y,0),roads[0]));
-            }
+            current_position=candidate;
+            path.Add(current_position);
         }
         return path;
-          
+    }
+
+    bool isInBounds(Vector2 coordinate) {
+        if(coordinate.x>=0&&coordinate.x<this.size.x&&coordinate.y>=0&&coordinate.y<this.size.y) {
+            return true;
+        }
+        return false;
     }
 }
