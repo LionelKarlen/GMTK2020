@@ -24,7 +24,9 @@ public class CarController : MonoBehaviour {
             rb.velocity = rb.velocity * deceleration;
         }
         if(Input.GetKey(KeyCode.W)||Input.GetKey("up")){
+            if(!CarSounds.isPlaying){
             CarSounds.Play(0);
+            }
         }
         else{
             CarSounds.Pause();
