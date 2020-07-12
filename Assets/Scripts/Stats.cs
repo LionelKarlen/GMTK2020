@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stats {
 
-    public static int stages;
+    public static int stages, lives;
 
     public static int Stages {
         get {
@@ -15,4 +15,12 @@ public class Stats {
         }
     }
 
+    public static int Lives {
+        get {
+            return lives;
+        }
+        set {
+            lives=value;
+        }
+    }
 }

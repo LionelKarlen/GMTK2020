@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class CarExistence : MonoBehaviour
 {
-    public int lives;
     public GameObject Square;
     private AudioSource Bump;
     public Text counter;
@@ -19,7 +18,7 @@ public class CarExistence : MonoBehaviour
     void Start()
     {
         Bump = Square.GetComponent<AudioSource>();
-        counter.text = "Lives: "+lives.ToString();
+        counter.text = "Lives: "+Stats.Lives.ToString();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -28,11 +27,12 @@ public class CarExistence : MonoBehaviour
         if (other.gameObject.tag == "Wall")
         {
             vulnerable = false;
-            lives--;
+            Stats.Lives--;
             Bump.Play(0);
-            counter.text = "Lives: " + lives.ToString();
+            counter.text = "Lives: " + Stats.Lives.ToString();
         } else if(other.gameObject.tag == "Goal") {
             timeHandler.GetComponent<Timer>().end=true;
+            Stats.Lives++;
             // mapGenerator.GetComponent<MapGeneration>().resetMap();
         }
         }
@@ -52,7 +52,7 @@ public class CarExistence : MonoBehaviour
                 }
             }
         }
-        if(lives <= 0){
+        if(Stats.Lives <= 0){
             SceneManager.LoadScene("GameOver");
         }
     }

@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074277134506db947b89d35e59705247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelCounter: {fileID: 919731254}
+  LevelCounter: {fileID: 0}
 --- !u!4 &448702322
 Transform:
   m_ObjectHideFlags: 0
@@ -986,7 +986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 3
   Square: {fileID: 1741702728}
-  counter: {fileID: 0}
+  counter: {fileID: 919731254}
   vulnerable: 1
   timerStart: 0
   HasTimerStarted: 0
