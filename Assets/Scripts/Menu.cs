@@ -10,4 +10,10 @@ public class Menu : MonoBehaviour
         Stats.Stages=0;
         Stats.Lives=3;
     }
+    public void QuitGame (){
+        Application.Quit();
+    }
+    public void qUITtoMenu(){
+        SceneManager.LoadScene("TitleScreen");
+    }
 }
