@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CarController : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class CarController : MonoBehaviour {
     public float speed;
     public float deceleration;
     AudioSource CarSounds;
+    public Tilemap roadTilemap;
 
     // Start is called before the first frame update
     void Start() {
@@ -26,6 +28,11 @@ public class CarController : MonoBehaviour {
         }
         else{
             CarSounds.Pause();
+        }
+        if(!roadTilemap.HasTile(roadTilemap.WorldToCell(transform.position))) {
+            speed=1;
+        } else {
+            speed=2;
         }
     }
 }

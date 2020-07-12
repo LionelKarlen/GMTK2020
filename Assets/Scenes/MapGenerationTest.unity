@@ -1146,6 +1146,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 3
   Square: {fileID: 1899161565}
+  counter: {fileID: 0}
+  vulnerable: 1
+  timerStart: 0
+  HasTimerStarted: 0
 --- !u!114 &1994475439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1161,6 +1165,7 @@ MonoBehaviour:
   rb: {fileID: 1994475441}
   speed: 2
   deceleration: 0.98
+  roadTilemap: {fileID: 1692396149}
 --- !u!61 &1994475440
 BoxCollider2D:
   m_ObjectHideFlags: 0
