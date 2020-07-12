@@ -5,20 +5,9 @@ using UnityEngine.UI;
 
 public class LevelCountText : MonoBehaviour
 {
-    static public int LevelCount = 0;
     public Text LevelCounter;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // if(Input.GetKey(KeyCode.T)){
-        //     LevelCount++;
-        // }
+    
+    void Update() {
         LevelCounter.text = "Level: "+Stats.Stages.ToString();
     }
 }
