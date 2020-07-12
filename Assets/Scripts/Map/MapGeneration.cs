@@ -40,6 +40,7 @@ public class MapGeneration : MonoBehaviour {
                 } else if(x>size.x*.9f && Random.Range(0f,1f)>.75f && !endPoint && y>startPointVector.y+distanceModifier) {
                     roadTilemap.SetTile(tile, roads);
                     endPointVector=tile;
+                    obstacleTilemap.SetTile(tile, obstacles[0]);
                     endPoint=true;
                 }
                 if(!endPoint) {
