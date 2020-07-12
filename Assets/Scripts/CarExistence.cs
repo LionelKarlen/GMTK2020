@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class CarExistence : MonoBehaviour
 {
     public int lives;
+    public GameObject Square;
+    private AudioSource Bump;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Bump = Square.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -18,6 +20,7 @@ public class CarExistence : MonoBehaviour
         if (other.gameObject.tag == "Wall")
         {
             lives--;
+            Bump.Play(0);
         }
     }
     // Update is called once per frame
