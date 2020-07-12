@@ -13,10 +13,14 @@ public class MapGeneration : MonoBehaviour {
 
     public Tile grass;
     public RuleTile roads;
-    public Tile[] obstacles;
+    public PrefabTile[] obstacles;
+
+    public int barricades;
+    public int buildings;
 
     public int distanceModifier;
     public GameObject CameraRig;
+    public GameObject timerHandler;
 
     private bool startPoint=false;
     private bool endPoint=false;
@@ -28,8 +32,26 @@ public class MapGeneration : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        for(int x=0;x<size.x;x++) {
-            for(int y=0;y<size.y;y++) {
+        generateMap();
+        timerHandler.GetComponent<Timer>().start=true;
+    }
+
+    public void resetMap() {
+        startPoint=false;
+        endPoint=false;
+        startPointVector=new Vector3();
+        endPointVector=new Vector3();
+        
+        grassTilemap.ClearAllTiles();
+        roadTilemap.ClearAllTiles();
+        obstacleTilemap.ClearAllTiles();
+    }
+
+    public void generateMap() {
+        resetMap();
+        obstacleTilemap.SetTile(new Vector3Int(0,0,0), obstacles[2]);
+        for(int x=1;x<size.x+1;x++) {
+            for(int y=1;y<size.y+1;y++) {
                 Vector3Int tile = new Vector3Int(x,y,0);
                 grassTilemap.SetTile(tile, grass);
                 if(x<size.x*.25f && Random.Range(0f,1f)>.75f && !startPoint) {
@@ -43,15 +65,35 @@ public class MapGeneration : MonoBehaviour {
                     obstacleTilemap.SetTile(tile, obstacles[0]);
                     endPoint=true;
                 }
-                if(!endPoint) {
-                    endPointVector=new Vector3(size.x,size.y,0);
-                }
             }
+        }
+        if(!endPoint) {
+            endPointVector=new Vector3(size.x,size.y,0);
+        }
+        if(!startPoint) {
+            startPointVector=new Vector3(0,0,0);
         }
         List<Vector2> path = findRandomPath(new Vector2(startPointVector.x,startPointVector.y),new Vector2(endPointVector.x,endPointVector.y));
         foreach(Vector2 road in path) {
-            Debug.Log(road);
-            roadTilemap.SetTile(new Vector3Int((int)road.x,(int)road.y,0), roads);
+            Vector3Int tile = new Vector3Int((int)road.x,(int)road.y,0);
+            roadTilemap.SetTile(tile, roads);
+            if(Random.Range(0f,1f)>0.75f&&barricades>0&&tile!=endPointVector&&tile!=startPointVector) {
+                obstacleTilemap.SetTile(tile, obstacles[1]);
+                barricades--;
+            }
+        }
+
+        for(int x=0;x<=size.x+1;x++) {
+            for(int y=0;y<=size.y+1;y++) {
+                Vector3Int tile = new Vector3Int(x,y,0);
+                if(Random.Range(0f,1f)>0.75f&&buildings>0&&!roadTilemap.HasTile(tile)) {
+                    obstacleTilemap.SetTile(tile, obstacles[2]);
+                    buildings--;
+                }
+                if(x==0 || y==0 || x==size.x+1 || y==size.y+1) {
+                    obstacleTilemap.SetTile(tile, obstacles[2]);
+                }
+            }
         }
     }
 
@@ -78,38 +120,11 @@ public class MapGeneration : MonoBehaviour {
 
     bool isLegalCandidate(Vector2 candidate, Vector2 current, Vector2 end) {
         if(candidate.x>=0&&candidate.x<this.size.x&&candidate.y>=0&&candidate.y<this.size.y) {
-            if(Vector2.Distance(candidate,end)<Vector2.Distance(current,end)) {
+            if(Vector2.Distance(candidate,end)<=Vector2.Distance(current,end)) {
                 return true;
             }
             return false;
         }
         return false;
     }
-
-    // Tile getTileType(Vector2 coordinate, Tilemap tilemap) {
-    //     Debug.Log(tilemap.GetTile(new Vector3Int((int)coordinate.x+1,(int)coordinate.y,0)));
-    //     if(tilemap.HasTile(tilemap.WorldToCell(tilemap.CellToWorld(new Vector3Int((int)coordinate.x+1,(int)coordinate.y,0))))) {
-    //         if(tilemap.HasTile(new Vector3Int((int)coordinate.x,(int)coordinate.y+1,0))) {
-    //             return roads[1];
-    //         } else if(tilemap.HasTile(new Vector3Int((int)coordinate.x,(int)coordinate.y-1,0))) {
-    //             return roads[1];
-    //         }
-    //         return roads[2];
-    //     } else if(tilemap.HasTile(tilemap.WorldToCell(tilemap.CellToWorld(new Vector3Int((int)coordinate.x-1,(int)coordinate.y,0))))) {
-    //         if(tilemap.HasTile(new Vector3Int((int)coordinate.x,(int)coordinate.y+1,0))) {
-    //             return roads[1];
-    //         } else if(tilemap.HasTile(new Vector3Int((int)coordinate.x,(int)coordinate.y-1,0))) {
-    //             return roads[1];
-    //         }
-    //         return roads[2];
-    //     }
-    //     // } else if(tilemap.HasTile(new Vector3Int((int)coordinate.x,(int)coordinate.y+1,0))) {
-            
-        //     return roads[0];
-        // } else if(tilemap.HasTile(new Vector3Int((int)coordinate.x,(int)coordinate.y-1,0))) {
-            
-        //     return roads[0];
-        // }
-        // return roads[0];
-    // }
 }

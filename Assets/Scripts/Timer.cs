@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
-{
+public class Timer : MonoBehaviour {
     public Text timerText;
     private float startTime;
     public bool start;
@@ -14,6 +13,8 @@ public class Timer : MonoBehaviour
     public float startTime2;
     public bool Stop;
     public GameObject ScreenDim;
+    public GameObject mapGenerator;
+
     void Start()
     {
         ScreenDim.SetActive(false);
@@ -57,8 +58,9 @@ public class Timer : MonoBehaviour
             }
             else{
                 ScreenDim.SetActive(false);
-            TextFlash.text = "";
-            end = false;
+                TextFlash.text = "";
+                end = false;
+                // mapGenerator.GetComponent<MapGeneration>().generateMap();
             }
         }
         }

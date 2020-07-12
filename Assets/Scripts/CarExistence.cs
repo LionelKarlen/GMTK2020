@@ -13,12 +13,15 @@ public class CarExistence : MonoBehaviour
     public bool vulnerable = true;
     public float timerStart;
     public bool HasTimerStarted = false;
+    public GameObject mapGenerator;
+    public GameObject timeHandler;
     // Start is called before the first frame update
     void Start()
     {
         Bump = Square.GetComponent<AudioSource>();
-        counter.text = "Lives: 3";
+        counter.text = "Lives: "+lives.ToString();
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(vulnerable){
@@ -28,6 +31,8 @@ public class CarExistence : MonoBehaviour
             lives--;
             Bump.Play(0);
             counter.text = "Lives: " + lives.ToString();
+        } else if(other.gameObject.tag == "Goal") {
+            timeHandler.GetComponent<Timer>().end=true;
         }
         }
     }

@@ -203,9 +203,9 @@ MonoBehaviour:
   grass: {fileID: 11400000, guid: c555e71d5135f7f47a93a776933e7392, type: 2}
   roads: {fileID: 11400000, guid: 2d55951d0694f7b49bd3b65721b6cfa5, type: 2}
   obstacles:
-  - {fileID: 11400000, guid: 0ce2d73a008e8fa42a2aaca3accf56cd, type: 2}
-  - {fileID: 11400000, guid: edbbc925f67ae584cb78638230d6a381, type: 2}
-  - {fileID: 11400000, guid: 7809369c097ea7f4098d13efa6254c82, type: 2}
+  - {fileID: 11400000, guid: 75ff610036d84364198da7baa93a4bb0, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   distanceModifier: 0
   CameraRig: {fileID: 2004034748}
 --- !u!4 &722423248
@@ -1150,6 +1150,7 @@ MonoBehaviour:
   vulnerable: 1
   timerStart: 0
   HasTimerStarted: 0
+  mapGenerator: {fileID: 722423246}
 --- !u!114 &1994475439
 MonoBehaviour:
   m_ObjectHideFlags: 0
