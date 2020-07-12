@@ -62,6 +62,7 @@ public class Timer : MonoBehaviour {
                 TextFlash.text = "";
                 end = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                Stats.Stages++;
             }
         }
         }

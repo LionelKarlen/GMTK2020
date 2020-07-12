@@ -7,5 +7,6 @@ public class Menu : MonoBehaviour
 {
     public void PLayGame(){
         SceneManager.LoadScene("PlayableScene");
+        Stats.Stages=0;
     }
 }

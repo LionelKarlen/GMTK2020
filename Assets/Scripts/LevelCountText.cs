@@ -16,9 +16,9 @@ public class LevelCountText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.T)){
-            LevelCount++;
-        }
-        LevelCounter.text = LevelCount.ToString();
+        // if(Input.GetKey(KeyCode.T)){
+        //     LevelCount++;
+        // }
+        LevelCounter.text = Stats.Stages.ToString();
     }
 }
