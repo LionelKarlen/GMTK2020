@@ -19,6 +19,6 @@ public class LevelCountText : MonoBehaviour
         // if(Input.GetKey(KeyCode.T)){
         //     LevelCount++;
         // }
-        LevelCounter.text = Stats.Stages.ToString();
+        LevelCounter.text = "Level: "+Stats.Stages.ToString();
     }
 }
