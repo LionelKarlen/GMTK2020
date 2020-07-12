@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour {
     public Text timerText;
@@ -60,7 +61,7 @@ public class Timer : MonoBehaviour {
                 ScreenDim.SetActive(false);
                 TextFlash.text = "";
                 end = false;
-                // mapGenerator.GetComponent<MapGeneration>().generateMap();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
         }

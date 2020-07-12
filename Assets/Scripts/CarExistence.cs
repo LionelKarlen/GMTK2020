@@ -33,6 +33,7 @@ public class CarExistence : MonoBehaviour
             counter.text = "Lives: " + lives.ToString();
         } else if(other.gameObject.tag == "Goal") {
             timeHandler.GetComponent<Timer>().end=true;
+            // mapGenerator.GetComponent<MapGeneration>().resetMap();
         }
         }
     }
