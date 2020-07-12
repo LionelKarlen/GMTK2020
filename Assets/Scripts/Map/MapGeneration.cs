@@ -21,6 +21,7 @@ public class MapGeneration : MonoBehaviour {
     public int distanceModifier;
     public GameObject CameraRig;
     public GameObject timerHandler;
+    public Timer timerScript;
 
     private bool startPoint=false;
     private bool endPoint=false;
@@ -38,6 +39,8 @@ public class MapGeneration : MonoBehaviour {
         generateMap();
         backupBarricades = barricades;
         backupBuildings = buildings;
+        timerScript = timerHandler.GetComponent<Timer>();
+        timerScript.start = true;
     }
 
     public void resetMap() {
