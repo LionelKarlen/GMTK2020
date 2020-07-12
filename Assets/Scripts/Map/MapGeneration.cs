@@ -136,6 +136,9 @@ public class MapGeneration : MonoBehaviour {
                 int move = Random.Range(0,4);
                 candidate = new Vector2(current_position.x+offsets[move].x,current_position.y+offsets[move].y);
                 valid = isLegalCandidate(candidate,current_position,end);
+                // if(i<4&&valid&&isCloser(candidate,current_position,end)) {
+                //     break;
+                // }
                 i++;
             }
             current_position=candidate;
@@ -146,10 +149,14 @@ public class MapGeneration : MonoBehaviour {
 
     bool isLegalCandidate(Vector2 candidate, Vector2 current, Vector2 end) {
         if(candidate.x>=0&&candidate.x<this.size.x&&candidate.y>=0&&candidate.y<this.size.y) {
-            if(Vector2.Distance(candidate,end)<=Vector2.Distance(current,end)) {
-                return true;
-            }
-            return false;
+            return isCloser(candidate, current, end);
+        }
+        return false;
+    }
+
+    bool isCloser(Vector2 candidate, Vector2 current, Vector2 end){
+        if(Vector2.Distance(candidate,end)<=Vector2.Distance(current,end)) {
+            return true;
         }
         return false;
     }
